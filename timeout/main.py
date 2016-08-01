@@ -15,15 +15,13 @@
 # limitations under the License.
 #
 import webapp2
+import os
 import jinja2
 import os
 from google.appengine.ext import ndb
 
-jinja_environment = jinja2.Environment(loader=
+jinja_environment = jinja2.Environment(loader =
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
-
-class User(nd.Model):
-    name=
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -33,6 +31,7 @@ class CelineTestHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index.html')
         self.response.write(template.render())
+
 class NigelTestHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
