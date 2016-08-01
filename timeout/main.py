@@ -6,26 +6,39 @@ from google.appengine.ext import ndb
 jinja_environment = jinja2.Environment(loader =
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-# ================== HANDLERS ===================
+# ================== HANDLERS ====================
 # actual handlers
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello world!')
 class FeelingHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index.html')
         self.response.write(template.render())
 
-# test handlers
-class CelineTestHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/index.html')
-        self.response.write(template.render())
-class NigelTestHandler(webapp2.RequestHandler):
+class MessageHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
         self.response.write(template.render())
-class PeteTestHandler(webapp2.RequestHandler):
+
+class WriterHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_enviroment.get_template('templates/write.html')
+        self.response.write(template.render())
+
+    def post(self):
+        template = jinja_environment.get_template('templates/write_confirm.html')
+        new_compliment = self.request.get('words')
+        complimentObj = Compliment(content=new_compliment,points=0,views=0)
+        comp_key = complimentObj.put()
+
+# test handlers
+class IndexHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/index.html')
+        self.response.write(template.render())
+class ResponseHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/response.html')
+        self.response.write(template.render())
+class WriteHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/write.html')
         self.response.write(template.render())
@@ -45,8 +58,8 @@ class Compliment(ndb.Model):
     views = ndb.IntegerProperty(required=True)
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/celix', CelineTestHandler),
-    ('/nigel', NigelTestHandler),
-    ('/pete', PeteTestHandler)
+    ('/', FeelingHandler),
+    ('/index', IndexHandler),
+    ('/response', ResponseHandler),
+    ('/write', WriteHandler)
 ], debug=True)
