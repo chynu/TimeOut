@@ -17,7 +17,6 @@
 import webapp2
 import os
 import jinja2
-import os
 from google.appengine.ext import ndb
 
 jinja_environment = jinja2.Environment(loader =
