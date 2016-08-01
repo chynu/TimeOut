@@ -16,7 +16,7 @@ class IndexHandler(webapp2.RequestHandler):
 class ResponseHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
-        added_points = int(self.request.get('points'))
+        #added_points = int(self.request.get('points'))
         self.response.write(template.render())
 
     def post(self):
@@ -31,24 +31,8 @@ class WriteHandler(webapp2.RequestHandler):
     def post(self):
         template = jinja_environment.get_template('templates/write_confirm.html')
         new_compliment = self.request.get('words')
-        complimentObj = Compliment(content=new_compliment,points= 0,views= 0)
+        complimentObj = Compliment(content=new_compliment,points=0,views=0)
         comp_key = complimentObj.put()
-
-
-
-# test handlers
-class IndexTestHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/index.html')
-        self.response.write(template.render())
-class ResponseTestHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/response.html')
-        self.response.write(template.render())
-class WriteTestHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/write.html')
-        self.response.write(template.render())
 
 # ================ OBJECTS =================
 # user object, for each login. ONLY instantiated when a person logs in with gmail username.
