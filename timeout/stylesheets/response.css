@@ -1,1 +1,17 @@
 /* hey */
+
+#ResponseBox {
+  width: 400px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
+  background-color: red;
+
+
+}
+#Message {
+  width:auto;
+  background-color: pink;
+
+}
