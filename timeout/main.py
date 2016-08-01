@@ -27,6 +27,22 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
 
+# class User(ndb.Model):
+#     name=ndb.StringProperty(required=True)
+#     email=ndb.StringProperty(required=True)
+#     compliment_list= ndb.KeyProperty(kind="Compliment_list", repeated=True)
+
+class Compliment(ndb.Model):
+    string=ndb.StringPoperty(required=True)
+    points=ndb.StringPoperty(required=True)
+    views=ndb.IntegerProperty(required=True)
+
+
+
+
+
+
+
 class CelineTestHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index.html')
