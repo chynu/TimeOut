@@ -66,8 +66,6 @@ class Compliment(ndb.Model):
 
 app = webapp2.WSGIApplication([
     ('/', IndexHandler),
-    ('/indext', IndexTestHandler),
-    ('/responset', ResponseTestHandler),
-    ('/writet', WriteTestHandler),
+    ('/response', ResponseHandler),
     ('/write', WriteHandler)
 ], debug=True)
