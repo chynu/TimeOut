@@ -32,8 +32,8 @@ class MainHandler(webapp2.RequestHandler):
 #     compliment_list= ndb.KeyProperty(kind="Compliment_list", repeated=True)
 
 class Compliment(ndb.Model):
-    string=ndb.StringPoperty(required=True)
-    points=ndb.StringPoperty(required=True)
+    string=ndb.StringProperty(required=True)
+    points=ndb.StringProperty(required=True)
     views=ndb.IntegerProperty(required=True)
 
 
