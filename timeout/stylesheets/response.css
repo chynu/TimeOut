@@ -30,3 +30,7 @@ body,html{
   border-radius:10px;
   font-size:14px;
 }
+
+input {
+  margin-right:10px;
+}
