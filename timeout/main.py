@@ -36,8 +36,8 @@ class NigelTestHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/response.html')
         self.response.write(template.render())
 
+
+
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/celix', CelineTestHandler),
-    ('/nigel', NigelTestHandler)
+    ('/', MainHandler)
 ], debug=True)
