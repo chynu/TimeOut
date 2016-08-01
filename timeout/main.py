@@ -6,11 +6,8 @@ from google.appengine.ext import ndb
 jinja_environment = jinja2.Environment(loader =
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-# ================== HANDLERS ===================
+# ================== HANDLERS ====================
 # actual handlers
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello world!')
 class FeelingHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index.html')
@@ -21,7 +18,7 @@ class MessageHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/response.html')
         self.response.write(template.render())
 
-class WriterHandler(webappw.RequestHandler):
+class WriterHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_enviroment.get_template('templates/write.html')
         self.response.write(template.render())
@@ -29,9 +26,8 @@ class WriterHandler(webappw.RequestHandler):
     def post(self):
         template = jinja_environment.get_template('templates/write_confirm.html')
         new_compliment = self.request.get('words')
-        complimentObj = Compliment(content = new_compliment)
-
-
+        complimentObj = Compliment(content=new_compliment,points=0,views=0)
+        comp_key = complimentObj.put()
 
 # test handlers
 class IndexHandler(webapp2.RequestHandler):
@@ -58,8 +54,8 @@ class User(ndb.Model):
 # called every time someone ASKS FOR a compliment.
 class Compliment(ndb.Model):
     content = ndb.StringProperty(required=True)
-    points = ndb.IntegerProperty(required=False)
-    views = ndb.IntegerProperty(required=False)
+    points = ndb.IntegerProperty(required=True)
+    views = ndb.IntegerProperty(required=True)
 
 app = webapp2.WSGIApplication([
     ('/', FeelingHandler),
