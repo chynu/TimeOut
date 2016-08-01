@@ -8,37 +8,44 @@ jinja_environment = jinja2.Environment(loader =
 
 # ================== HANDLERS ====================
 # actual handlers
-class FeelingHandler(webapp2.RequestHandler):
+class IndexHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index.html')
         self.response.write(template.render())
 
-class MessageHandler(webapp2.RequestHandler):
+class ResponseHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
+        added_points = int(self.request.get('points'))
         self.response.write(template.render())
 
-class WriterHandler(webapp2.RequestHandler):
+    def post(self):
+        template = jinja_environment.get_template('templates/response_confirm.html')
+        self.response.write(template.render())
+
+class WriteHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_enviroment.get_template('templates/write.html')
+        template = jinja_environment.get_template('templates/write.html')
         self.response.write(template.render())
 
     def post(self):
         template = jinja_environment.get_template('templates/write_confirm.html')
         new_compliment = self.request.get('words')
-        complimentObj = Compliment(content=new_compliment,points=0,views=0)
+        complimentObj = Compliment(content=new_compliment,points= 0,views= 0)
         comp_key = complimentObj.put()
 
+
+
 # test handlers
-class IndexHandler(webapp2.RequestHandler):
+class IndexTestHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index.html')
         self.response.write(template.render())
-class ResponseHandler(webapp2.RequestHandler):
+class ResponseTestHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
         self.response.write(template.render())
-class WriteHandler(webapp2.RequestHandler):
+class WriteTestHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/write.html')
         self.response.write(template.render())
@@ -58,8 +65,9 @@ class Compliment(ndb.Model):
     views = ndb.IntegerProperty(required=True)
 
 app = webapp2.WSGIApplication([
-    ('/', FeelingHandler),
-    ('/index', IndexHandler),
-    ('/response', ResponseHandler),
+    ('/', IndexHandler),
+    ('/indext', IndexTestHandler),
+    ('/responset', ResponseTestHandler),
+    ('/writet', WriteTestHandler),
     ('/write', WriteHandler)
 ], debug=True)
