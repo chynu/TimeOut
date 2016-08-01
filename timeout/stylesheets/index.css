@@ -3,9 +3,12 @@ html,body {
   height:100%;
 }
 #question {
+  text-align:center;
+  top:50%;
   width:100px;
   height:100px;
   left:50%;
+  margin-top:-50px;
   margin-left:-50px;
   position:absolute;
 }
