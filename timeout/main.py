@@ -3,8 +3,6 @@ import os
 import jinja2
 from google.appengine.ext import ndb
 import random
-from objects import Compliment
-from objects import User
 
 jinja_environment = jinja2.Environment(loader =
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -25,7 +23,6 @@ class IndexHandler(webapp2.RequestHandler):
     frontend: /templates/response.html,         /stylesheets/response.css
               /templates/response_confirm.html, /stylesheets/repsonse.css   """
 class ResponseHandler(webapp2.RequestHandler):
-
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
         # added_points = int(self.request.get('points'))
@@ -39,11 +36,13 @@ class ResponseHandler(webapp2.RequestHandler):
         self.response.write(template.render(temp))
 
     def post(self):
-        global chosen_comp
         template = jinja_environment.get_template('templates/response_confirm.html')
-        Compliment.get_by_id(self.response.get("id")).addPoints()
+        updated_comp = Compliment.get_by_id(int(self.request.get("id"))).addPoints(int(self.request.get("points")))
+        updated_comp.put()
+
         temp = {
-            "test": self.response.get("points")
+            "test": updated_comp,
+            "compliment": updated_comp.content
         }
         self.response.write(template.render(temp))
 
@@ -72,6 +71,24 @@ class DashHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/dashboard.html')
         self.response.write(template.render())
+
+# ================ OBJECTS =================
+# user object, for each login. ONLY instantiated when a person logs in with gmail username.
+class User(ndb.Model):
+    name = ndb.StringProperty(required=True)
+    email = ndb.StringProperty(required=True)
+    compliment_list = ndb.KeyProperty('Compliment', repeated=True)
+
+# compliment object, created every time someone WRITES a compliment.
+# called every time someone ASKS FOR a compliment.
+class Compliment(ndb.Model):
+    content = ndb.StringProperty(required=True)
+    points = ndb.IntegerProperty(required=True)
+    views = ndb.IntegerProperty(required=True)
+
+    def addPoints(self,inc):
+        self.points += inc
+        return self
 
 # ============== LINKS ===============
 app = webapp2.WSGIApplication([
