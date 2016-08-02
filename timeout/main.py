@@ -25,8 +25,9 @@ class IndexHandler(webapp2.RequestHandler):
 class ResponseHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
-        # added_points = int(self.request.get('points'))
-        # this is where you would query and fetch a list of all compliments, then get a random item from that list.
+
+        # fetch list of all compliments, get random compliment in entire list;
+        #    also store ID of this compliment for future use.
         comp_list = Compliment.query().fetch()
         chosen_comp = comp_list[random.randint(0, ( len(comp_list)-1 ))]
         temp = {
@@ -41,7 +42,7 @@ class ResponseHandler(webapp2.RequestHandler):
         updated_comp.put()
 
         temp = {
-            "test": updated_comp,
+            # "test": updated_comp,
             "compliment": updated_comp.content
         }
         self.response.write(template.render(temp))
@@ -95,5 +96,6 @@ app = webapp2.WSGIApplication([
     ('/', IndexHandler),
     ('/response', ResponseHandler),
     ('/write', WriteHandler),
-    ('/dashboard', DashHandler)
+    ('/dashboard', DashHandler),
+    ('/login', LoginHandler)
 ], debug=True)
