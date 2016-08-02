@@ -49,8 +49,7 @@ class WriteHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/write_confirm.html')
         self.response.write(template.render())
         new_compliment = self.request.get('words')
-        complimentObj = Compliment(content=new_compliment,points=4,views=0)
-        complimentObj.addPoints(3)
+        complimentObj = Compliment(content=new_compliment,points=0,views=0)
         comp_key = complimentObj.put()
 
 """ HANDLER INFORMATION
