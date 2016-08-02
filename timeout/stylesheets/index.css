@@ -1,36 +1,20 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto+Condensed';
 
-html,body {
-  font-family:'Roboto Condensed',sans-serif;
-  width:100%;
-  height:100%;
-}
-#top {
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100px;
-  background:#40C76F;
-  text-align:center;
-}
-#top p {
-  font-size:30px;
-  margin:30px 0 0 0;
-  padding:0;
-}
 #left {
-  background:#F2EC41;
+  background:#FFFFFF;
   left:0;
   color:black;
 }
 #right {
   color:black;
-  background:#72B9CF;
+  background:#FFFFFF;
   right:0;
 }
+#left:hover,#right:hover{
+  background:gray;
+}
 #left,#right {
-  margin-top:100px;
+  margin-top:70px;
   position:fixed;
   top:0;
   width:50%;
