@@ -38,7 +38,7 @@ class ResponseHandler(webapp2.RequestHandler):
 
     def post(self):
         template = jinja_environment.get_template('templates/response_confirm.html')
-        updated_comp = Compliment.get_by_id(int(self.request.get("id"))).addPoints(int(self.request.get("points")))
+        updated_comp = Compliment.get_by_id(int(self.request.get("id"))).addPoints(int(self.request.get("points")), 1)
         updated_comp.put()
 
         temp = {
@@ -92,9 +92,9 @@ class Compliment(ndb.Model):
     points = ndb.IntegerProperty(required=True)
     views = ndb.IntegerProperty(required=True)
 
-    def addPoints(self,inc):
+    def addPoints(self,inc, view):
         self.points += inc
-        self.views += 1
+        self.views += view
         return self
 
 # ============== LINKS ===============
