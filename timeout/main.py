@@ -2,6 +2,7 @@ import webapp2
 import os
 import jinja2
 from google.appengine.ext import ndb
+import random
 
 jinja_environment = jinja2.Environment(loader =
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -22,17 +23,22 @@ class IndexHandler(webapp2.RequestHandler):
     frontend: /templates/response.html,         /stylesheets/response.css
               /templates/response_confirm.html, /stylesheets/repsonse.css   """
 class ResponseHandler(webapp2.RequestHandler):
+    comp_list = Compliment.query().fetch()
+    chosen_comp = comp_list[random.randint(0, ( len(comp_list)-1 ))]
+
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
         # added_points = int(self.request.get('points'))
         # this is where you would query and fetch a list of all compliments, then get a random item from that list.
         temp = {
-            "compliment": "value to display in html"
+            "compliment": chosen_comp.content
         }
         self.response.write(template.render(temp))
 
     def post(self):
         template = jinja_environment.get_template('templates/response_confirm.html')
+        global chosen_comp
+        chosen_comp.addPoints(self.response.get("points"))
         self.response.write(template.render())
 
 """ HANDLER INFORMATION
