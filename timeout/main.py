@@ -73,6 +73,11 @@ class DashHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/dashboard.html')
         self.response.write(template.render())
 
+class LoginHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/login.html')
+        self.response.write(template.render())
+
 # ================ OBJECTS =================
 # user object, for each login. ONLY instantiated when a person logs in with gmail username.
 class User(ndb.Model):
