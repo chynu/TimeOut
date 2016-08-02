@@ -94,6 +94,7 @@ class Compliment(ndb.Model):
 
     def addPoints(self,inc):
         self.points += inc
+        self.views += 1
         return self
 
 # ============== LINKS ===============
