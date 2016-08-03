@@ -6,7 +6,13 @@
     <link href="../stylesheets/dashboard.css" rel="stylesheet">
   </head>
   <body>
-<table>
+
+    <div class="header">
+      <span class="title"><a href="/response">timeout</a>
+        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png"/></span>
+      <span class="info">{{username}}username   <a href="{{log_url}}">{{log_text}} login</a></span>
+    </div>
+
   <table>
     <tr>
       <th>Content</th>
@@ -23,8 +29,6 @@
   </table>
 
   </body>
-  </html>
-
-  </table>
-  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../scripts/audio.js"></script>
 </html>

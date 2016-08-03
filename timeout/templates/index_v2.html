@@ -4,11 +4,12 @@
     <title>TimeOut</title>
     <link href="../stylesheets/general.css" rel="stylesheet">
     <link href="../stylesheets/index_v2.css" rel="stylesheet">
-    <iframe width="420" height="315" src="https://www.youtube.com/embed/WIbUNfg_wmM?autoplay=1&loop=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+    <div id="player"></div>
   </head>
   <body>
     <div class="header">
-      <span class="title"><a href="/response">timeout</a></span>
+      <span class="title"><a href="/response">timeout</a>
+        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png"></span>
       <span class="info">{{username}}    <a href="{{log_url}}">{{log_text}}</a>   <a href = "/dashboard">{{dash_text}}</span>
     </div>
     <div class="moon">
@@ -29,7 +30,7 @@
 
     <div class="three">
       <a href="/response?feeling=happy"><div class="star"></div></a>
-      <div class="tag">i'm happy</div>
+      <div class="tag">i'm anxious</div>
     </div>
 
     <div class="four">
@@ -43,5 +44,6 @@
     </div>
 
   </body>
-  <script src="../scripts/index.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../scripts/audio.js"></script>
 </html>
