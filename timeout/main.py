@@ -91,7 +91,10 @@ class WriteHandler(webapp2.RequestHandler):
 class DashHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/dashboard.html')
-        self.response.write(template.render())
+        temp = {
+            "fetched_list": Compliment.query().fetch()
+        }
+        self.response.write(template.render(temp))
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):

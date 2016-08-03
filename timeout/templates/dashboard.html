@@ -18,26 +18,13 @@
       <th>Views</th>
       <th>Points</th>
     </tr>
+    {% for comp_obj in fetched_list %}
     <tr>
-      <td>Sample1</td>
-      <td>Sample1</td>
-      <td>Sample1</td>
+      <td>{{comp_obj.content}}</td>
+      <td>{{comp_obj.views}}</td>
+      <td>{{comp_obj.points}}</td>
     </tr>
-    <tr>
-      <td>Sample1</td>
-      <td>Sample1</td>
-      <td>Sample1</td>
-    </tr>
-    <tr>
-      <td>Sample1</td>
-      <td>Sample1</td>
-      <td>Sample1</td>
-    </tr>
-    <tr>
-      <td>Sample1</td>
-      <td>Sample1</td>
-      <td>Sample1</td>
-  </tr>
+    {% endfor %}
   </table>
 
   </body>
