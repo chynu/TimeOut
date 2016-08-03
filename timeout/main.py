@@ -1,6 +1,7 @@
 import webapp2
 import os
 import jinja2
+from google.appengine.api import users
 from google.appengine.ext import ndb
 import random
 import logging
@@ -16,7 +17,22 @@ jinja_environment = jinja2.Environment(loader =
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index.html')
-        self.response.write(template.render())
+        user = users.get_current_user()
+        if user: # if logged in
+            log = users.create_logout_url('/')
+            nick = user.nickname()
+            log_text = "Log out"
+        else:
+            log = users.create_login_url('/')
+            nick = None
+            log_text = "Log in"
+
+        temp = {
+            "username": nick,
+            "log_url": log,
+            "log_text": log_text
+        }
+        self.response.write(template.render(temp))
 
 """ HANDLER INFORMATION
     url: /response
