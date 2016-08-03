@@ -18,7 +18,9 @@ body{
 a {
   color:white;
 }
-
+iframe {
+  display:none;
+}
 .header {
   margin:0;
   width:100%;
