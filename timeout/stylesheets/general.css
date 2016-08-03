@@ -8,18 +8,12 @@ html {
   width:100%;
   height:100%;
   font-family:'Inconsolata','Roboto Condensed',sans-serif;
+  color:white;
 }
 body{
   width:100%;
   height:100%;
-}
-header {
-  position:absolute;
-  width:100%;
-  height:30px;
-  background:#DBDBDB;
-  top:0; left:0;
-  padding:20px;
+  background:url('http://data.whicdn.com/images/12706095/original.jpg');
 }
 .header {
   margin:0;

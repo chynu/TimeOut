@@ -11,14 +11,24 @@ a:hover {
   color:#EDEDED;
 }
 table, td, th {
-    border: 1px solid black;
+    border: 0px solid black;
 }
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 80%;
+    margin:10px;
+    transform:translateX(10%);
+    margin-bottom:100px;
 }
-
-th {
-    height: 50px;
+th,td {
+    height: auto;
+    padding: 10px;
+}
+tr td {
+  padding:10px;
+  border:1px solid gray;
+}
+tr {
+  border-radius:8px;
 }
