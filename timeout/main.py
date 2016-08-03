@@ -22,16 +22,18 @@ class IndexHandler(webapp2.RequestHandler):
             log = users.create_logout_url('/')
             nick = user.nickname()
             log_text = "Log out"
+            dash_text = "Dashboard"
         else:
             log = users.create_login_url('/')
-            nick = None
+            nick = ""
             log_text = "Log in"
+            dash_text = ""
 
         temp = {
             "username": nick,
             "log_url": log,
             "log_text": log_text,
-            "user_check": user
+            "dash_text": dash_text
         }
         self.response.write(template.render(temp))
 
