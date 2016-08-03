@@ -95,6 +95,11 @@ class LoginHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/login.html')
         self.response.write(template.render())
 
+class TestHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/index_v2.html')
+        self.response.write(template.render())
+
 # ================ OBJECTS =================
 # user object, for each login. ONLY instantiated when a person logs in with gmail username.
 class User(ndb.Model):
@@ -123,5 +128,6 @@ app = webapp2.WSGIApplication([
     ('/response', ResponseHandler),
     ('/write', WriteHandler),
     ('/dashboard', DashHandler),
-    ('/login', LoginHandler)
+    ('/login', LoginHandler),
+    ('/test', TestHandler)
 ], debug=True)
