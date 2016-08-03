@@ -30,7 +30,8 @@ class IndexHandler(webapp2.RequestHandler):
         temp = {
             "username": nick,
             "log_url": log,
-            "log_text": log_text
+            "log_text": log_text,
+            "user_check": user
         }
         self.response.write(template.render(temp))
 
