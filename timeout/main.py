@@ -6,8 +6,6 @@ from google.appengine.ext import ndb
 import random
 import logging
 
-
-
 jinja_environment = jinja2.Environment(loader =
     jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -18,7 +16,7 @@ jinja_environment = jinja2.Environment(loader =
     frontend: /templates/index.html,            /stylesheets/index.css     """
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('templates/index.html')
+        template = jinja_environment.get_template('templates/index_v2.html')
         user = users.get_current_user()
         if user: # if logged in
             log = users.create_logout_url('/')
