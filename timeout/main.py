@@ -24,7 +24,8 @@ class IndexHandler(webapp2.RequestHandler):
             log_text = user.given_name()
             dash_text = "Dashboard"
 
-            new_user = User(user.nickname, user)
+
+            new_user = User(user.nickname, user.email(), )
         else:
             log = users.create_login_url('/')
             nick = ""
@@ -113,7 +114,7 @@ class TestHandler(webapp2.RequestHandler):
 class User(ndb.Model):
     name = ndb.StringProperty(required=True)
     email = ndb.StringProperty(required=True)
-    compliment_list = ndb.KeyProperty('Compliment', repeated=True)
+    compliment_list = ndb.ListProperty( required = True)
 
 # compliment object, created every time someone WRITES a compliment.
 # called every time someone ASKS FOR a compliment.
