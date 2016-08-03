@@ -21,8 +21,10 @@ class IndexHandler(webapp2.RequestHandler):
         if user: # if logged in
             log = users.create_logout_url('/')
             nick = user.nickname()
-            log_text = "Log out"
+            log_text = user.given_name()
             dash_text = "Dashboard"
+
+            new_user = User(user.nickname, user)
         else:
             log = users.create_login_url('/')
             nick = ""
