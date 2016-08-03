@@ -21,21 +21,21 @@ class IndexHandler(webapp2.RequestHandler):
         if user: # if logged in
             log = users.create_logout_url('/')
             nick = user.nickname()
-            log_text = user.given_name()
+            # log_text = user.given_name()
             dash_text = "Dashboard"
 
 
-            new_user = User(user.nickname, user.email(), )
+            # new_user = User(user.nickname, user.email(), )
         else:
             log = users.create_login_url('/')
             nick = ""
-            log_text = "Log in"
+            # log_text = "Log in"
             dash_text = ""
 
         temp = {
             "username": nick,
             "log_url": log,
-            "log_text": log_text,
+            "log_text": "log in",#log_text,
             "dash_text": dash_text
         }
         self.response.write(template.render(temp))
@@ -114,7 +114,7 @@ class TestHandler(webapp2.RequestHandler):
 class User(ndb.Model):
     name = ndb.StringProperty(required=True)
     email = ndb.StringProperty(required=True)
-    compliment_list = ndb.ListProperty( required = True)
+    # compliment_list = ndb.ListProperty( required = True)
 
 # compliment object, created every time someone WRITES a compliment.
 # called every time someone ASKS FOR a compliment.
