@@ -18,24 +18,40 @@ class IndexHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index_v2.html')
         user = users.get_current_user()
+        global new_user
         if user: # if logged in
+            user_id = user.user_id()
+            #looks for user in database
+            user_identification = User.query().filter(User.email_user_id == user_id)
+
+
             log = users.create_logout_url('/')
             nick = user.nickname()
-            # log_text = user.given_name()
+            log_text = "log out"
             dash_text = "Dashboard"
 
 
-            # new_user = User(user.nickname, user.email(), )
+
+            #if the user is not in the database after logging in.....
+            if not user_identification.get():
+                new_user = User(name = user.nickname, email = user.email(), compliment_list = [])
+                #...logs you in and redirects you to basic info where you can create your instance in the database
+                # log = users.create_login_url('/')
+                # nick = ""
+                # log_text = "Log in"
+                # dash_text = ""
+                new_user.put()
+
         else:
             log = users.create_login_url('/')
             nick = ""
-            # log_text = "Log in"
+            log_text = "Log in"
             dash_text = ""
 
         temp = {
             "username": nick,
             "log_url": log,
-            "log_text": "log in",#log_text,
+            "log_text": log_text,
             "dash_text": dash_text
         }
         self.response.write(template.render(temp))
@@ -81,11 +97,20 @@ class WriteHandler(webapp2.RequestHandler):
         self.response.write(template.render())
 
     def post(self):
-        template = jinja_environment.get_template('templates/write_confirm.html')
-        self.response.write(template.render())
-        new_compliment = self.request.get('words')
-        complimentObj = Compliment(content=new_compliment,points=0,views=0)
-        comp_key = complimentObj.put()
+        if user:
+            template = jinja_environment.get_template('templates/write_confirm.html')
+            self.response.write(template.render())
+            new_compliment = self.request.get('words')
+            complimentObj = Compliment(content=new_compliment,points=0,views=0)
+            comp_key = complimentObj.put()
+            global new_user
+            new_user.compliment_list.append(comp_key)
+        else:
+            template = jinja_environment.get_template('templates/write_confirm.html')
+            self.response.write(template.render())
+            new_compliment = self.request.get('words')
+            complimentObj = Compliment(content=new_compliment,points=0,views=0)
+            comp_key = complimentObj.put()
 
 """ HANDLER INFORMATION
     url: /dashboard
@@ -114,7 +139,11 @@ class TestHandler(webapp2.RequestHandler):
 class User(ndb.Model):
     name = ndb.StringProperty(required=True)
     email = ndb.StringProperty(required=True)
-    # compliment_list = ndb.ListProperty( required = True)
+    compliment_list = ndb.KeyProperty(repeated = True)
+    user_status = 1
+
+    def userVisited(self):
+        user_status -= 1
 
 # compliment object, created every time someone WRITES a compliment.
 # called every time someone ASKS FOR a compliment.
