@@ -5,7 +5,7 @@ btn.click(function(){
   console.log("Clicked!");
   if (playing){
     player.pauseVideo();
-    document.getElementById("audio_button").src = "http://www.iconsdb.com/icons/preview/white/mute-2-xxl.png";
+    document.getElementById("audio_button").src = "http://www.iconsplace.com/download/white-mute-256.png";
   }
   else {
     player.playVideo();

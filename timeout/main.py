@@ -120,14 +120,15 @@ class WriteHandler(webapp2.RequestHandler):
 
     def post(self):
         current_user = users.get_current_user()
+        matched_user = User.query().filter(User.email_user_id == current_user.user_id()).get()
+        logging.warning(str(matched_user))
         new_compliment = self.request.get('words')
         complimentObj = Compliment(content=new_compliment,points=0,views=0)
         comp_key = complimentObj.put()
 
-        matched_user = User.query().filter(User.email_user_id == current_user.user_id())
-
         if current_user: #if logged in, then add to that user's comp list. if not, don't add it to anything.
-            matched_user.get().compliment_list.append(comp_key)
+            matched_user.compliment_list.append(comp_key)
+            matched_user.put()
             nick = current_user.nickname()
             log = users.create_logout_url('/')
             log_text = "log out"
