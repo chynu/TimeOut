@@ -47,7 +47,7 @@ class IndexHandler(webapp2.RequestHandler):
         else:
             logging.info("Not logged in!")
             log = users.create_login_url('/')
-            nick = ""
+            nick = "Anonymous"
             log_text = "Log in"
             dash_text = ""
 
@@ -163,7 +163,7 @@ class DashHandler(webapp2.RequestHandler):
 
         user_id = current_user.user_id()
         matched_user = User.query().filter(User.email_user_id == user_id)
-
+        logging.error(matched_user.get())
         temp = {
             "fetched_list": Compliment.query().fetch(), #all compliments.
             "user_list": matched_user.get().compliment_list, # list of compliment keys (specific to user)
