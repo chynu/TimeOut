@@ -98,15 +98,11 @@ class ResponseHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/response_confirm.html')
         logging.error(self.request.get("points"))
         logging.error(str(self.request.get("points") < 0))
-        
+
         if(int(self.request.get("points")) < 0):
             updated_comp = Compliment.get_by_id(int(self.request.get("id"))).report()
-            logging.error("SPPAAAAAMAMMMMMMMMMMMMMMMMMMMMMMM")
-            logging.error(str(updated_comp))
         else:
-            logging.error("SAFEEEEEEEEEEEEEEE")
             updated_comp = Compliment.get_by_id(int(self.request.get("id"))).addPoints(int(self.request.get("points")))
-            logging.error(str(updated_comp))
         updated_comp.put()
 
         temp = {
@@ -224,6 +220,7 @@ class Compliment(ndb.Model):
 
     def report(self):
         self.reported = True
+        self.views += 1
         return self
 
 # ============== LINKS ===============
