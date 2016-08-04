@@ -57,3 +57,6 @@ iframe {
 .title a:hover {
   color:#EDEDED;
 }
+.title img {
+  margin:15px;
+}

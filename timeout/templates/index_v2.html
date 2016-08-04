@@ -7,11 +7,22 @@
     <div id="player"></div>
   </head>
   <body>
+    <!-- header -->
     <div class="header">
-      <span class="title"><a href="/response">timeout</a>
-        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png"></span>
+      <span class="title"><a href="/">timeout</a>
+        <br/>
+        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png">
+        <span id="quest">?</span>
+        <div class="popup">
+          <b>ABOUT TIMEOUT</b>
+          <p>TimeOut is a safe space for people who are searching for a helping hand. In life, all of us reach obstacles that seem undefeatable, or </p>
+        </div>
+      </span>
+
       <span class="info">{{username}}    <a href="{{log_url}}">{{log_text}}</a>   <a href = "/dashboard">{{dash_text}}</a></span>
     </div>
+
+    <!-- click options -->
     <div class="moon">
       <a href="/write">
       <img width="70px" height="auto" src="http://vignette2.wikia.nocookie.net/avatarrp/images/4/47/Moon.png/revision/latest?cb=20140826234501"/>
@@ -45,5 +56,15 @@
 
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>
+var quest = $("#quest");
+var popup = $(".popup");
+var clicked = false;
+quest.click(function(){
+  if (clicked){ popup.fadeOut(300); }
+  else { popup.fadeIn(300); }
+  clicked = !clicked;
+});
+  </script>
   <script src="../scripts/audio.js"></script>
 </html>
