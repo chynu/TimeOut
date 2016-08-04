@@ -17,32 +17,35 @@ jinja_environment = jinja2.Environment(loader =
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index_v2.html')
-        user = users.get_current_user()
-        global new_user
-        if user: # if logged in
-            user_id = user.user_id()
+        current_user = users.get_current_user()
+        if current_user: # if logged in
+            logging.info("Logged in!")
+            user_id = current_user.user_id()
             #looks for user in database
             user_identification = User.query().filter(User.email_user_id == user_id)
 
-
             log = users.create_logout_url('/')
-            nick = user.nickname()
+            nick = current_user.nickname()
             log_text = "log out"
             dash_text = "Dashboard"
 
-
-
             #if the user is not in the database after logging in.....
             if not user_identification.get():
-                new_user = User(name = user.nickname, email = user.email(), compliment_list = [])
+                logging.info("Logged in, but not in database.")
+                current_user = User(
+                    name = current_user.nickname(),
+                    email = current_user.email(),
+                    email_user_id = user_id
+                )
                 #...logs you in and redirects you to basic info where you can create your instance in the database
                 # log = users.create_login_url('/')
                 # nick = ""
                 # log_text = "Log in"
                 # dash_text = ""
-                new_user.put()
+                current_user.put()
 
         else:
+            logging.info("Not logged in!")
             log = users.create_login_url('/')
             nick = ""
             log_text = "Log in"
@@ -94,23 +97,55 @@ class ResponseHandler(webapp2.RequestHandler):
 class WriteHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/write.html')
-        self.response.write(template.render())
+        current_user = users.get_current_user()
+
+        if current_user:
+            nick = current_user.nickname()
+            log = users.create_logout_url('/')
+            log_text = "log out"
+            dash_text = "dashboard"
+        else:
+            nick = "guest"
+            log = users.create_login_url('/')
+            log_text = "log in"
+            dash_text = ""
+
+        temp = {
+            "username": nick,
+            "log_url": log,
+            "log_text": log_text,
+            "dash_text": dash_text
+        }
+        self.response.write(template.render(temp))
 
     def post(self):
-        if user:
-            template = jinja_environment.get_template('templates/write_confirm.html')
-            self.response.write(template.render())
-            new_compliment = self.request.get('words')
-            complimentObj = Compliment(content=new_compliment,points=0,views=0)
-            comp_key = complimentObj.put()
-            global new_user
-            new_user.compliment_list.append(comp_key)
+        current_user = users.get_current_user()
+        new_compliment = self.request.get('words')
+        complimentObj = Compliment(content=new_compliment,points=0,views=0)
+        comp_key = complimentObj.put()
+
+        matched_user = User.query().filter(User.email_user_id == current_user.user_id())
+
+        if current_user: #if logged in, then add to that user's comp list. if not, don't add it to anything.
+            matched_user.get().compliment_list.append(comp_key)
+            nick = current_user.nickname()
+            log = users.create_logout_url('/')
+            log_text = "log out"
+            dash_text = "dashboard"
         else:
-            template = jinja_environment.get_template('templates/write_confirm.html')
-            self.response.write(template.render())
-            new_compliment = self.request.get('words')
-            complimentObj = Compliment(content=new_compliment,points=0,views=0)
-            comp_key = complimentObj.put()
+            nick = "guest"
+            log = users.create_login_url('/')
+            log_text = "log in"
+            dash_text = ""
+
+        template = jinja_environment.get_template('templates/write_confirm.html')
+        temp = {
+            "username": nick,
+            "log_url": log,
+            "log_text": log_text,
+            "dash_text": dash_text
+        }
+        self.response.write(template.render(temp))
 
 """ HANDLER INFORMATION
     url: /dashboard
@@ -119,8 +154,23 @@ class WriteHandler(webapp2.RequestHandler):
 class DashHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/dashboard.html')
+        current_user = users.get_current_user()
+
+        # if a not-logged in person tries to go to /dashboard, they will redirect to homepage.
+        if not current_user:
+            self.redirect('/')
+
+        user_id = current_user.user_id()
+        matched_user = User.query().filter(User.email_user_id == user_id)
+
         temp = {
-            "fetched_list": Compliment.query().fetch()
+            "fetched_list": Compliment.query().fetch(), #all compliments.
+            "user_list": matched_user.get().compliment_list, # list of compliment keys (specific to user)
+
+            "username": current_user.nickname(),
+            "log_url": users.create_logout_url('/'),
+            "log_text": "log out",
+            "dash_text": "dashboard"
         }
         self.response.write(template.render(temp))
 
@@ -139,11 +189,8 @@ class TestHandler(webapp2.RequestHandler):
 class User(ndb.Model):
     name = ndb.StringProperty(required=True)
     email = ndb.StringProperty(required=True)
-    compliment_list = ndb.KeyProperty(repeated = True)
-    user_status = 1
-
-    def userVisited(self):
-        user_status -= 1
+    compliment_list = ndb.KeyProperty("Compliment", repeated=True)
+    email_user_id = ndb.StringProperty(required=True)
 
 # compliment object, created every time someone WRITES a compliment.
 # called every time someone ASKS FOR a compliment.
