@@ -67,6 +67,17 @@ class IndexHandler(webapp2.RequestHandler):
 class ResponseHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/response.html')
+        current_user = users.get_current_user()
+        if current_user:
+            nick = current_user.nickname()
+            log = users.create_logout_url('/')
+            log_text = "log out"
+            dash_text = "dashboard"
+        else:
+            nick = "Anonymous"
+            log = users.create_login_url('/')
+            log_text = "log in"
+            dash_text = ""
 
         # fetch list of all compliments, get random compliment in entire list;
         #    also store ID of this compliment for future use.
@@ -75,13 +86,27 @@ class ResponseHandler(webapp2.RequestHandler):
         chosen_comp = comp_list[random.randint(0, ( len(comp_list)-1 ))]
         temp = {
             "compliment": chosen_comp.content,
-            "comp_id": chosen_comp.key.id()
+            "comp_id": chosen_comp.key.id(),
+            "username": nick,
+            "log_url": log,
+            "log_text": log_text,
+            "dash_text": dash_text
         }
         self.response.write(template.render(temp))
 
     def post(self):
         template = jinja_environment.get_template('templates/response_confirm.html')
-        updated_comp = Compliment.get_by_id(int(self.request.get("id"))).addPoints(int(self.request.get("points")))
+        logging.error(self.request.get("points"))
+        logging.error(str(self.request.get("points") < 0))
+        
+        if(int(self.request.get("points")) < 0):
+            updated_comp = Compliment.get_by_id(int(self.request.get("id"))).report()
+            logging.error("SPPAAAAAMAMMMMMMMMMMMMMMMMMMMMMMM")
+            logging.error(str(updated_comp))
+        else:
+            logging.error("SAFEEEEEEEEEEEEEEE")
+            updated_comp = Compliment.get_by_id(int(self.request.get("id"))).addPoints(int(self.request.get("points")))
+            logging.error(str(updated_comp))
         updated_comp.put()
 
         temp = {
@@ -106,7 +131,7 @@ class WriteHandler(webapp2.RequestHandler):
             log_text = "log out"
             dash_text = "dashboard"
         else:
-            nick = "guest"
+            nick = "Anonymous"
             log = users.create_login_url('/')
             log_text = "log in"
             dash_text = ""
@@ -122,7 +147,7 @@ class WriteHandler(webapp2.RequestHandler):
     def post(self):
         current_user = users.get_current_user()
         new_compliment = self.request.get('words')
-        complimentObj = Compliment(content=new_compliment,points=0,views=0, comp_type = self.request.get('emotion')) #,allow_multiple = True))
+        complimentObj = Compliment(content=new_compliment,points=0,views=0, comp_type = self.request.get('emotion'), reported = False) #,allow_multiple = True))
         comp_key = complimentObj.put()
 
         if current_user: #if logged in, then add to that user's comp list. if not, don't add it to anything.
@@ -135,7 +160,7 @@ class WriteHandler(webapp2.RequestHandler):
             log_text = "log out"
             dash_text = "dashboard"
         else:
-            nick = "guest"
+            nick = "Anonymous"
             log = users.create_login_url('/')
             log_text = "log in"
             dash_text = ""
@@ -168,23 +193,12 @@ class DashHandler(webapp2.RequestHandler):
             temp = {
                 "fetched_list": Compliment.query().fetch(), #all compliments.
                 "user_list": matched_user.get().compliment_list, # list of compliment keys (specific to user)
-
                 "username": current_user.nickname(),
                 "log_url": users.create_logout_url('/'),
                 "log_text": "log out",
                 "dash_text": "dashboard"
             }
             self.response.write(template.render(temp))
-
-class LoginHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/login.html')
-        self.response.write(template.render())
-
-class TestHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/index_v2.html')
-        self.response.write(template.render())
 
 # ================ OBJECTS =================
 # user object, for each login. ONLY instantiated when a person logs in with gmail username.
@@ -201,13 +215,15 @@ class Compliment(ndb.Model):
     points = ndb.IntegerProperty(required=True)
     views = ndb.IntegerProperty(required=True)
     comp_type = ndb.StringProperty(required = False)
+    reported = ndb.BooleanProperty(required = True)
 
     def addPoints(self, inc):
         self.points += inc
-        # logging.error("Incremented by " + str(inc))
         self.views += 1
-        # logging.error("View added by 1")
-        # logging.error(str(self))
+        return self
+
+    def report(self):
+        self.reported = True
         return self
 
 # ============== LINKS ===============
@@ -215,7 +231,5 @@ app = webapp2.WSGIApplication([
     ('/', IndexHandler),
     ('/response', ResponseHandler),
     ('/write', WriteHandler),
-    ('/dashboard', DashHandler),
-    ('/login', LoginHandler),
-    ('/test', TestHandler)
+    ('/dashboard', DashHandler)
 ], debug=True)
