@@ -1,0 +1,60 @@
+html {
+  overflow:hidden;
+}
+body {
+  background:url('http://data.whicdn.com/images/12706095/original.jpg');
+}
+.star {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:white;
+  border:10px solid rgba(255, 255, 255, 0);
+  background-clip:padding-box;
+  color:white;
+}
+.star:hover{
+  border:10px solid rgba(255, 255, 255, .2);
+  background-clip:padding-box;
+}
+.one, .two, .three, .four, .five, .moon {
+  position:absolute;
+  width:auto;
+  height:auto;
+}
+.one {
+  top:20%;
+  left:20%;
+}
+.two {
+  top: 55%;
+  left:45%;
+}
+.three {
+  top:80%;
+  left:10%;
+}
+.four {
+  top:30%;
+  left:80%;
+}
+.five {
+  top:85%;
+  left:95%;
+}
+.moon {
+  top:10%;
+  left:90%;
+  position:absolute;
+}
+.tag {
+  display:none;
+  margin-left:-50%;
+  font-size:14px;
+  margin-top:10px;
+  text-align:center;
+}
+.one:hover .tag, .two:hover .tag, .three:hover .tag, .four:hover .tag, .five:hover .tag, .moon:hover .tag{
+  color:white;
+  display:block;
+}
