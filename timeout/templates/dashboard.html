@@ -29,7 +29,7 @@
     {% else %}
       {% for comp_obj in user_list %}
       <tr>
-        <td>{{User.get_by_id(comp_obj).content}}</td>
+        <td>{{comp_obj.get().content}}</td>
         <td>{{comp_obj.get().views}}</td>
         <td>{{comp_obj.get().points}}</td>
       </tr>

@@ -4,6 +4,8 @@ html {
 body {
   background:url('http://data.whicdn.com/images/12706095/original.jpg');
 }
+
+/* stars */
 .star {
   width:8px;
   height:8px;
@@ -57,4 +59,44 @@ body {
 .one:hover .tag, .two:hover .tag, .three:hover .tag, .four:hover .tag, .five:hover .tag, .moon:hover .tag{
   color:white;
   display:block;
+}
+
+/* popup */
+.popup {
+  display:none;
+  z-index:99999999;
+  position:fixed;
+  width:60%;
+  height:60%;
+  background:white;
+  opacity:0.5;
+  left:20%;
+  top:20%;
+  padding:40px;
+  color:black;
+  border-radius:20px;
+  font-size:25px;
+}
+.popup b{
+  display:block;
+  text-align:center;
+  font-size:30px;
+  font-weight:bold;
+  text-transform:uppercase;
+  margin-bottom:30px;
+  text-decoration:underline;
+}
+.title .links {
+  font-size:14px;
+  margin:10px;
+}
+#quest {
+  font-size:18px;
+  position:absolute;
+  cursor:alias;
+  left:70px;
+  top:60px;
+}
+.popup p {
+  font-size:15px;
 }
