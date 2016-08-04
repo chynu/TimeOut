@@ -70,7 +70,8 @@ class ResponseHandler(webapp2.RequestHandler):
 
         # fetch list of all compliments, get random compliment in entire list;
         #    also store ID of this compliment for future use.
-        comp_list = Compliment.query().filter(Compliment.comp_type == self.request.get("feeling"))
+        comp_list = Compliment.query().filter(Compliment.comp_type == self.request.get("feeling")).fetch()
+        logging.info(comp_list)
         chosen_comp = comp_list[random.randint(0, ( len(comp_list)-1 ))]
         temp = {
             "compliment": chosen_comp.content,
@@ -199,7 +200,7 @@ class Compliment(ndb.Model):
     content = ndb.StringProperty(required=True)
     points = ndb.IntegerProperty(required=True)
     views = ndb.IntegerProperty(required=True)
-    comp_type = ndb.StringProperty(repeated = True)
+    comp_type = ndb.StringProperty(required = False)
 
     def addPoints(self, inc):
         self.points += inc
