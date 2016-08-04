@@ -24,11 +24,8 @@
     <div id="container">
     <p id="title">Your words:</p>
     <form method=post>
-      <textarea name="words" rows="24" cols="80"></textarea><br/>
-      <select>
-        <option></option>
-      </select>
-      <input id="sbm" type="submit" name="send!">
+      <textarea id="inp" name="words" rows="10" cols="50" placeholder="write your message here! :)"></textarea><br/>
+      <button id="sbm" type="submit">submit</button><br>
       <input type="radio" name="emotion" value= "sad" >Sad<br>
       <input type="radio" name="emotion" value= "anxious">Anxious<br>
       <input type="radio" name="emotion" value="depressed"> Depressed<br>
@@ -39,6 +36,11 @@
 
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>
+  var input = document.getElementById('inp');
+  input.focus();
+  input.select();
+  </script>
   <script src="../scripts/index.js"></script>
   <script src="../scripts/audio.js"></script>
 </html>
