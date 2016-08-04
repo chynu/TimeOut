@@ -66,16 +66,17 @@ body {
   display:none;
   z-index:99999999;
   position:fixed;
-  width:60%;
-  height:60%;
+  width:40%;
+  height:40%;
   background:white;
   opacity:0.5;
-  left:20%;
-  top:20%;
+  left:30%;
+  top:30%;
   padding:40px;
   color:black;
   border-radius:20px;
   font-size:25px;
+  overflow:scroll;
 }
 .popup b{
   display:block;
@@ -98,5 +99,5 @@ body {
   top:60px;
 }
 .popup p {
-  font-size:15px;
+  font-size:18px;
 }
