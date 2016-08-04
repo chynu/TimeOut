@@ -31,6 +31,7 @@ iframe {
   left:0;
   padding:20px;
   color:white;
+  text-transform:lowercase;
 }
 #icon {
   width:25px;
@@ -65,4 +66,11 @@ iframe {
   font-size:18px;
   cursor:alias;
   margin:0px 10px;
+}
+/* form edits */
+input[type=radio]:not(old) {
+  
+}
+input[type=radio]:selected span {
+  color:gray;
 }

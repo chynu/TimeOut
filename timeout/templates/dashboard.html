@@ -9,8 +9,15 @@
 
     <div class="header">
       <span class="title"><a href="/">timeout</a>
-        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png"/></span>
-      <span class="info">{{username}} <a href="{{log_url}}">{{log_text}}</a></span>
+      </span>
+
+      <span class="info">
+        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png">
+        <span id="quest">?</span>
+        {{username}}
+        <a href="{{log_url}}">{{log_text}}</a>
+        <a href="/dashboard">{{dash_text}}</a>
+      </span>
     </div>
 
   <table>

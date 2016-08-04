@@ -56,7 +56,9 @@ body {
   margin-top:10px;
   text-align:center;
 }
-.one:hover .tag, .two:hover .tag, .three:hover .tag, .four:hover .tag, .five:hover .tag, .moon:hover .tag{
+.one:hover .tag, .two:hover .tag,
+.three:hover .tag, .four:hover .tag,
+.five:hover .tag, .moon:hover .tag{
   color:white;
   display:block;
 }
@@ -66,8 +68,8 @@ body {
   display:none;
   z-index:99999999;
   position:fixed;
-  width:350px;
-  height:200px;
+  width:550px;
+  height:280px;
   top:30%;
   left:50%;
   transform:translateX(-50%);
@@ -80,9 +82,10 @@ body {
   text-align:justify;
 }
 .box {
+  margin-top:15px;
   overflow:scroll;
-  width:350px;
-  height:200px;
+  width:540px;
+  height:270px;
 }
 .popup b{
   display:block;

@@ -7,22 +7,49 @@
   </head>
   <body>
 
+    <div class="header">
+      <span class="title"><a href="/">timeout</a>
+      </span>
+
+      <span class="info">
+        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png">
+        <span id="quest">?</span>
+        {{username}}
+        <a href="{{log_url}}">{{log_text}}</a>
+        <a href="/dashboard">{{dash_text}}</a>
+      </span>
+    </div>
+
     <div id="container">
       <span id="title">Hey, we found a message for you...</span>
       <div id="Message">
         {{compliment}}
       </div>
       <form method=post>
-        <input type="radio" name="points" value="10">10 points </input>
+        <input type="radio" name="points" value="10"><span>10 points</span></input>
         <input type="radio" name="points" value="20">20 points </input>
         <input type="radio" name="points" value="30">30 points </input>
+        <input type="radio" name="points" value="-1">spam </input>
+
+        <!-- not shown -->
         <input style="display:none;" type="text" name="id" value="{{ comp_id }}"></input>
+        <!-- not shown -->
         <br/><br/>
-        <input type="submit" name="send!">
+        <button id="sbm" type="submit">submit</button>
       </form>
     </div>
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>
+var submit = $("#sbm");
+$("input[name=points]").on("click",doAct);
+
+function doAct(){
+  submit.css("display","block");
+  submit.fadeIn();
+}
+
+  </script>
   <script src="../scripts/index.js"></script>
   <script src="../scripts/audio.js"></script>
 </html>

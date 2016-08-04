@@ -32,3 +32,19 @@ input {
 a {
   color:white;
 }
+#sbm {
+  position:relative;
+  left: 50%;
+  transform:translateX(-50%);
+  background: black;
+  border-radius: 5px;
+  color: #fff;
+  display: none;
+  padding: 8px;
+  text-align: center;
+  font-family:'Inconsolata',monospace;
+  font-size:15px;
+}
+form {
+  text-align:center;
+}
