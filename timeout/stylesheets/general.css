@@ -60,3 +60,9 @@ iframe {
 .title img {
   margin:15px;
 }
+
+#quest {
+  font-size:18px;
+  cursor:alias;
+  margin:0px 10px;
+}

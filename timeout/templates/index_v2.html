@@ -10,16 +10,25 @@
     <!-- header -->
     <div class="header">
       <span class="title"><a href="/">timeout</a>
-        <br/>
-        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png">
-        <span id="quest">?</span>
-        <div class="popup">
-          <b>ABOUT TIMEOUT</b>
-          <p>TimeOut is a safe space for people who are searching for a helping hand. In life, all of us reach obstacles that seem undefeatable, or </p>
-        </div>
       </span>
 
-      <span class="info">{{username}}    <a href="{{log_url}}">{{log_text}}</a>   <a href = "/dashboard">{{dash_text}}</a></span>
+      <span class="info">
+        <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png">
+        <span id="quest">?</span>
+        <div class="popup"><div class="box">
+          <b>ABOUT TIMEOUT</b>
+          <p>TimeOut is an anonymous safe space for people who are searching for a helping hand. If you are in need of some kind words (as all of us do at certain times in our lives),
+          you can come here and click on a star that matches your emotion to receive kind words that real people have written for you!</p>
+          <p>You also have the ability to pay it forward! If you click on the moon, you can write a kind message for someone in need. Every word counts, and you never know if you might
+          change someone's life.</p>
+          <p>TimeOut is a completely anonymous site. If you log in with your Google account, you can keep track of the kind messages you have written for others and see how many
+          anonymous users have seen and appreciated your message. Collect points and see how much change you have made in people's lives. No records are kept of who reads what messages,
+          even if you are logged in. The only thing that is recorded is your own compliments that only you can see.</p>
+        </div></div>
+        {{username}}
+        <a href="{{log_url}}">{{log_text}}</a>
+        <a href="/dashboard">{{dash_text}}</a>
+      </span>
     </div>
 
     <!-- click options -->
@@ -56,15 +65,6 @@
 
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script>
-var quest = $("#quest");
-var popup = $(".popup");
-var clicked = false;
-quest.click(function(){
-  if (clicked){ popup.fadeOut(300); }
-  else { popup.fadeIn(300); }
-  clicked = !clicked;
-});
-  </script>
+  <script src="../scripts/index.js"></script>
   <script src="../scripts/audio.js"></script>
 </html>
