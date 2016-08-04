@@ -70,7 +70,7 @@ class ResponseHandler(webapp2.RequestHandler):
 
         # fetch list of all compliments, get random compliment in entire list;
         #    also store ID of this compliment for future use.
-        comp_list = Compliment.query().fetch()
+        comp_list = Compliment.query().filter(Compliment.comp_type == self.request.get("feeling"))
         chosen_comp = comp_list[random.randint(0, ( len(comp_list)-1 ))]
         temp = {
             "compliment": chosen_comp.content,
@@ -123,7 +123,7 @@ class WriteHandler(webapp2.RequestHandler):
         matched_user = User.query().filter(User.email_user_id == current_user.user_id()).get()
         logging.warning(str(matched_user))
         new_compliment = self.request.get('words')
-        complimentObj = Compliment(content=new_compliment,points=0,views=0)
+        complimentObj = Compliment(content=new_compliment,points=0,views=0, comp_type = self.request.get('emotion')) #,allow_multiple = True))
         comp_key = complimentObj.put()
 
         if current_user: #if logged in, then add to that user's comp list. if not, don't add it to anything.
@@ -160,20 +160,20 @@ class DashHandler(webapp2.RequestHandler):
         # if a not-logged in person tries to go to /dashboard, they will redirect to homepage.
         if not current_user:
             self.redirect('/')
+        else:
+            user_id = current_user.user_id()
+            matched_user = User.query().filter(User.email_user_id == user_id)
+            logging.error(matched_user.get())
+            temp = {
+                "fetched_list": Compliment.query().fetch(), #all compliments.
+                "user_list": matched_user.get().compliment_list, # list of compliment keys (specific to user)
 
-        user_id = current_user.user_id()
-        matched_user = User.query().filter(User.email_user_id == user_id)
-        logging.error(matched_user.get())
-        temp = {
-            "fetched_list": Compliment.query().fetch(), #all compliments.
-            "user_list": matched_user.get().compliment_list, # list of compliment keys (specific to user)
-
-            "username": current_user.nickname(),
-            "log_url": users.create_logout_url('/'),
-            "log_text": "log out",
-            "dash_text": "dashboard"
-        }
-        self.response.write(template.render(temp))
+                "username": current_user.nickname(),
+                "log_url": users.create_logout_url('/'),
+                "log_text": "log out",
+                "dash_text": "dashboard"
+            }
+            self.response.write(template.render(temp))
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
@@ -199,6 +199,7 @@ class Compliment(ndb.Model):
     content = ndb.StringProperty(required=True)
     points = ndb.IntegerProperty(required=True)
     views = ndb.IntegerProperty(required=True)
+    comp_type = ndb.StringProperty(repeated = True)
 
     def addPoints(self, inc):
         self.points += inc
