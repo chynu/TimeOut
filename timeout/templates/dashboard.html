@@ -28,19 +28,19 @@
         <br/><br/>
       </td>
     </tr>
+    {% if not user_list %}
+      <tr>
+        <td colspan="3">You haven't started writing compliments yet! Thanks for signing up, though. You are super cool, and we hope
+        you know it!</td>
+        <!--td>1mil</td>
+        <td>1mil</td-->
+      </tr>
+    {% else %}
     <tr>
       <th>Content</th>
       <th>Views</th>
       <th>Points</th>
     </tr>
-    {% if not user_list %}
-      <tr>
-        <td>You haven't started writing compliments yet! Thanks for signing up, though. You are super cool, and we hope
-        you know it!</td>
-        <td>1mil</td>
-        <td>1mil</td>
-      </tr>
-    {% else %}
       {% for comp_obj in user_list %}
         <!-- {% if comp_obj.get().isValid %} -->
         <tr>
