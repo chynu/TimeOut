@@ -19,12 +19,15 @@
   width:auto;
   height:auto;
   margin:10px;
-  background:rgba(0,0,0,0.7);
-  padding:10px;
+  background:rgba(0,0,0,0.65);
   border-radius:10px;
   font-size:14px;
 }
 
+#Message p {
+  white-space:pre-line;
+  text-align:justify;
+}
 input {
   margin-right:10px;
 }

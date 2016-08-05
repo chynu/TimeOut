@@ -105,9 +105,26 @@ class ResponseHandler(webapp2.RequestHandler):
             updated_comp = Compliment.get_by_id(int(self.request.get("id"))).addPoints(int(self.request.get("points")))
         updated_comp.put()
 
+        current_user = users.get_current_user()
+
+        if current_user:
+            nick = current_user.nickname()
+            log = users.create_logout_url('/')
+            log_text = "log out"
+            dash_text = "dashboard"
+        else:
+            nick = "Anonymous"
+            log = users.create_login_url('/')
+            log_text = "log in"
+            dash_text = ""
+
         temp = {
             # "test": updated_comp,
-            "compliment": updated_comp.content
+            "compliment": updated_comp.content,
+            "username": nick,
+            "log_url": log,
+            "log_text": log_text,
+            "dash_text": dash_text
         }
         self.response.write(template.render(temp))
 
