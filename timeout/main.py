@@ -84,6 +84,7 @@ class ResponseHandler(webapp2.RequestHandler):
         comp_list = Compliment.query().filter(Compliment.comp_type == self.request.get("feeling")).fetch()
         logging.info(comp_list)
         chosen_comp = comp_list[random.randint(0, ( len(comp_list)-1 ))]
+        chosen_comp.addView().put()
         temp = {
             "compliment": chosen_comp.content,
             "comp_id": chosen_comp.key.id(),
@@ -241,14 +242,18 @@ class Compliment(ndb.Model):
         else:
             return False
 
+    def addView(self):
+        self.views += 1
+        return self
+
     def addPoints(self, inc):
         self.points += inc
-        self.views += 1
+        # self.views += 1
         return self
 
     def report(self):
         self.reported = True
-        self.views += 1
+        # self.views += 1
         return self
 
 # ============== LINKS ===============
