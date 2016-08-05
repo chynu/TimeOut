@@ -13,7 +13,6 @@
 
       <span class="info">
         <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png">
-        <span id="quest">?</span>
         {{username}}
         <a href="{{log_url}}">{{log_text}}</a>
         <a href="/dashboard">{{dash_text}}</a>
@@ -21,21 +20,30 @@
     </div>
 
     <div id="container">
-      <span id="title">Hey, we found a message for you...</span>
+      <span id="title">There's something I want to tell you...</span>
       <div id="Message">
-        {{compliment}}
+        <p>{{compliment}}<p>
       </div>
-      <form method=post>
-        <input type="radio" name="points" value="10"><span>10 points</span></input>
-        <input type="radio" name="points" value="20">20 points </input>
-        <input type="radio" name="points" value="30">30 points </input>
-        <input type="radio" name="points" value="-1">spam </input>
+      <form style="text-align:center;padding:0;margin:0;" method=post>
+        <!--div style="clear:both;"><input class="points" type="radio" name="points" value="10" id="10"/><label for="10">10 points</label></div>
+        <div style="clear:both;"><input class="points" type="radio" name="points" value="20" id="20"/><label for="20">20 points</label></div>
+        <div style="clear:both;"><input class="points" type="radio" name="points" value="30" id="30"/><label for="30">30 points</label></div>
+        <div style="clear:both;"><input class="points" type="radio" name="points" value="-1" id="-1"/><label for="-1">spam</label></div-->
+        <br/>
 
+        How helpful was this message?
+        <select name="points">
+          <option name="points" value="10">10 points</option>
+          <option name="points" value="20">20 points</option>
+          <option name="points" value="30">30 points</option>
+          <option name="points" value="40">40 points</option>
+          <option name="points" value="50">50 points</option>
+          <option name="points" value="-1">mark as spam!</option>
+        </select>
+        <button style="display:inline;" id="sbm" type="submit">></button>
         <!-- not shown -->
         <input style="display:none;" type="text" name="id" value="{{ comp_id }}"></input>
         <!-- not shown -->
-        <br/><br/>
-        <button id="sbm" type="submit">submit</button>
       </form>
     </div>
   </body>
@@ -50,6 +58,6 @@ function doAct(){
 }
 
   </script>
-  <script src="../scripts/index.js"></script>
+  <!--script src="../scripts/index.js"></script-->
   <script src="../scripts/audio.js"></script>
 </html>

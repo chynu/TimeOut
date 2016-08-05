@@ -12,7 +12,6 @@
 
       <span class="info">
         <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png">
-        <span id="quest">?</span>
         {{username}}
         <a href="{{log_url}}">{{log_text}}</a>
         <a href="/dashboard">{{dash_text}}</a>
@@ -20,16 +19,25 @@
     </div>
 
     <div id="container">
-    <p id="title">Your words:</p>
-    <form method=post>
-      <textarea id="inp" name="words" rows="10" cols="50" placeholder="write your message here! :)"></textarea><br/>
-      <button id="sbm" type="submit">submit</button><br>
-      <input type="radio" name="emotion" value= "sad" >Sad<br>
-      <input type="radio" name="emotion" value= "anxious">Anxious<br>
-      <input type="radio" name="emotion" value="depressed"> Depressed<br>
-      <input type="radio" name="emotion" value= "embarrassed"> Embarassed<br>
-      <input type="radio" name="emotion" value= "unconfident"> Unconfident<br>
-    </form>
+    <p id="title">Write a kind message!</p>
+    <p class="gray"><em>Remember to use friendly language. This is a safe space!</em></p><br/>
+    <p><u>To</u>: <span class="gray">people who are feeling</span>
+      <form method=post>
+        <div id="dropdown">
+        <select name="emotion">
+          <option name="emotion" value="sad">sad<br>
+          <option name="emotion" value="anxious">anxious<br>
+          <option name="emotion" value="depressed">depressed<br>
+          <option name="emotion" value="embarrassed">embarassed<br>
+          <option name="emotion" value="unconfident">unconfident<br>
+        </select>
+        </div>
+        <u>From</u>: <span class="gray">anonymous</span><br/><br/>
+        <u>Message</u>:<br/><br/>
+        <textarea id="inp" name="words" rows="10" cols="50" placeholder="write your message here! :)"></textarea><br/>
+        <button id="sbm" type="submit">send</button><br>
+      </form>
+    </p>
     </div>
 
   </body>

@@ -1,15 +1,14 @@
 /* hey */
 @import 'https://fonts.googleapis.com/css?family=Roboto+Condensed';
 #title {
-  font-size:25px;
+  font-size:20px;
 }
 #container {
   /* positioning */
   position:absolute;
-  width: 400px;
+  width: 40%;
   height: 200px;
-  left: 50%;
-  margin-left: -200px;
+  left: 30%;
   top:50%;
   transform:translateY(-50%);
 
@@ -20,7 +19,7 @@
   width:auto;
   height:auto;
   margin:10px;
-  background:#000000;
+  background:rgba(0,0,0,0.7);
   padding:10px;
   border-radius:10px;
   font-size:14px;
@@ -33,18 +32,68 @@ a {
   color:white;
 }
 #sbm {
-  position:relative;
-  left: 50%;
-  transform:translateX(-50%);
   background: black;
   border-radius: 5px;
-  color: #fff;
-  display: none;
-  padding: 8px;
+  border:1px solid #C7C7C7;
+  color: #C7C7C7;
+  display:block;
+  padding: 5px 10px;
   text-align: center;
   font-family:'Inconsolata',monospace;
   font-size:15px;
 }
-form {
-  text-align:center;
+/*
+input.points:empty ~ label {
+  position: relative;
+	float: left;
+	line-height: 2.5em;
+	text-indent: 3.25em;
+	margin-top: 2em;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
+label {
+  padding:5px;
+  border:1px solid white;
+}
+input.radio:empty {
+  display:none;
+  margin-left:-9999px;
+}
+input.radio:hover:not(:checked) ~ label:before {
+	content:'\2714';
+	text-indent: .9em;
+	color: #C2C2C2;
+}
+
+input.radio:hover:not(:checked) ~ label {
+	color: #888;
+}
+input.points:empty ~ label:before {
+	position: absolute;
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	content: '';
+	width: 2.5em;
+	background: #D1D3D4;
+	border-radius: 3px 0 0 3px;
+}
+input.radio:checked ~ label:before {
+	content:'\2714';
+	text-indent: .9em;
+	color: #9CE2AE;
+	background-color: #4DCB6D;
+}
+
+input.radio:checked ~ label {
+	color: #777;
+}
+input.radio:focus ~ label:before {
+	box-shadow: 0 0 0 3px #999;
+}
+*/

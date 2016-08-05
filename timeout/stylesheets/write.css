@@ -36,3 +36,9 @@ textarea {
 textarea:focus {
   outline:none !important;
 }
+form { display:inline-block;}
+select {
+    float:right;
+    margin-top:-38px;
+    margin-right:155px;
+}

@@ -67,10 +67,19 @@ iframe {
   cursor:alias;
   margin:0px 10px;
 }
-/* form edits */
-input[type=radio]:not(old) {
-  
+.gray {
+  color:#C7C7C7;
 }
-input[type=radio]:selected span {
-  color:gray;
+
+select {
+  border:1px solid #C7C7C7;
+  background:transparent;
+  -webkit-appearance:none;
+  color:#C7C7C7;
+  font-family:'Inconsolata',monospace;
+  font-size:15px;
+  width:auto;
+  height:auto;
+  padding:5px;
+  cursor:pointer;
 }

@@ -13,10 +13,8 @@
 
       <span class="info">
         <img id="audio_button" style="width:15px;height:auto;" src="http://www.iconsplace.com/download/white-volume-up-256.png">
-        <span id="quest">?</span>
         {{username}}
         <a href="{{log_url}}">{{log_text}}</a>
-        <a href="/dashboard">{{dash_text}}</a>
       </span>
     </div>
 
@@ -44,11 +42,13 @@
       </tr>
     {% else %}
       {% for comp_obj in user_list %}
-      <tr>
-        <td>{{comp_obj.get().content}}</td>
-        <td>{{comp_obj.get().views}}</td>
-        <td>{{comp_obj.get().points}}</td>
-      </tr>
+        <!-- {% if comp_obj.get().isValid %} -->
+        <tr>
+          <td>{{comp_obj.get().content}}</td>
+          <td>{{comp_obj.get().views}}</td>
+          <td>{{comp_obj.get().points}}</td>
+        </tr>
+        <!-- {% endif %} -->
       {% endfor %}
     {% endif %}
   </table>

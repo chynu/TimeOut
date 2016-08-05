@@ -178,6 +178,8 @@ class DashHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/dashboard.html')
         current_user = users.get_current_user()
+        # tempC = Compliment(content="  ",points=10,views=3,comp_type="embarrassed",reported=False)
+        # logging.warning(str(tempC.isValid()))
 
         # if a not-logged in person tries to go to /dashboard, they will redirect to homepage.
         if not current_user:
@@ -185,7 +187,6 @@ class DashHandler(webapp2.RequestHandler):
         else:
             user_id = current_user.user_id()
             matched_user = User.query().filter(User.email_user_id == user_id)
-            logging.error(matched_user.get())
             temp = {
                 "fetched_list": Compliment.query().fetch(), #all compliments.
                 "user_list": matched_user.get().compliment_list, # list of compliment keys (specific to user)
@@ -194,6 +195,10 @@ class DashHandler(webapp2.RequestHandler):
                 "log_text": "log out",
                 "dash_text": "dashboard"
             }
+            logging.warning("=================== ALL COMPLIMENTS ===================")
+            for k in temp["user_list"]:
+                print k.get()
+            logging.warning("=================== END COMPLIMENTS ===================")
             self.response.write(template.render(temp))
 
 # ================ OBJECTS =================
@@ -212,6 +217,12 @@ class Compliment(ndb.Model):
     views = ndb.IntegerProperty(required=True)
     comp_type = ndb.StringProperty(required = False)
     reported = ndb.BooleanProperty(required = True)
+
+    def isValid(self):
+        if len(self.content.strip(" ")) > 0 or len(self.content) > 0:
+            return True
+        else:
+            return False
 
     def addPoints(self, inc):
         self.points += inc
