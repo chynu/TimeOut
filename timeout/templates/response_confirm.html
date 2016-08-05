@@ -25,10 +25,22 @@
       </div>
       Your feedback has been sent!<Br/><br/>
       <a href="/">return home</a>
+      <!-- / <span id="refresh"><a style="text-decoration:underline;cursor:pointer;">another one!</a></span> -->
     </div>
 
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!--script src="../scripts/index.js"></script-->
+  <script>
+var ref = $("#refresh");
+console.log("it runs!");
+
+ref.click(ref);
+
+function ref(){
+  console.log("clicked");
+  location.reload(true);
+}
+  </script>
   <script src="../scripts/audio.js"></script>
 </html>
